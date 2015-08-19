@@ -13,19 +13,26 @@ var Queue = function(){
   };
 
   someInstance.dequeue = function(){
+    if (counter > 0) {  
+      var temp = storage[0];
+    	for (var i = 1; i <= counter; i++){ //storage.length is unknown at this point
+    		storage[i-1] = storage[i];
+    	}
 
-	for (var i = 1; i <= counter; i++){ //storage.length is unknown at this point
-		storage[i-1] = storage[i];
-	}
-	delete storage[counter];
-	counter--;
+    	delete storage[counter];
+    	counter--;
+      return temp;
+      
+    }
   };
 
-  someInstance.size = function(){
-	return counter + 1;
-  };
 
-  return someInstance;
+      someInstance.size = function(){
+    	// return Object.keys(storage).length;
+      return counter;
+    };
+
+    return someInstance;
 };
 
 /*
@@ -35,3 +42,6 @@ myQueue.enqueue("firstthing");
 
 */
 //myQueue.storage === {0: "firstthing"}
+
+//still need to pass use of 'this' test
+//assuming(referencesThis).expect(/((?!\/\/).)*(this)/m.test(constructor)).to.be.true;
