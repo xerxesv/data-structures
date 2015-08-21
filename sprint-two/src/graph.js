@@ -39,12 +39,16 @@ Graph.prototype.contains = function(node){
 // ------------------------
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node){
- 
+  var connectingEdges;
 
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i].id === node) {
       this.nodes.splice(this.nodes[i], 1);
 
+      // connectingEdges = this.nodes[i].edges;
+      // for (var j = 0; j < connectingEdges.length; j++) {
+      //   this.findNode(connectingEdges[j]).edges.splice(connectingEdges[j].edges.indexOf(node));
+      // }
       break;
     }
   }
@@ -60,6 +64,7 @@ Graph.prototype.hasEdge = function(fromNode, toNode){
 // ------------------------
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode){
+  
   this.findNode(fromNode).edges.push(toNode);
   this.findNode(toNode).edges.push(fromNode);
 };
@@ -75,17 +80,23 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb){
   for (var i = 0; i < this.nodes.length; i++){
-    cb(this.nodes[i]);
+    cb(this.nodes[i].id);
   }
 };
 
 Graph.prototype.findNode = function(node) {
+  var theNode;
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i].id === node) {
-      return this.nodes[i];
+      theNode = this.nodes[i];
     } 
   }
-  return null;
+  if(theNode === undefined){
+    debugger;
+  }
+  return theNode;
+
+
 };
 /*
  * Complexity: What is the time complexity of the above functions?
