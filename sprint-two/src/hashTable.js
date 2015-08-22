@@ -1,22 +1,23 @@
 var HashTable = function(){
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-
+  
+  var bucket;
+  var tupal;
 };
-var bucket;
-var tupal;
+
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
+  tupal = [k, v];
 
 
-  if (!this._storage.get(i)) {
+  if (this._storage.get(i) === undefined) {
     bucket = [];
-    tupal = [k, v];
-
     bucket.push(tupal);
     this._storage.set(i, bucket)
   } else {
-    bucket.pupsh([k, v]);
+
+    this._storage.get(i).push(tupal);
   }
 
 
@@ -40,10 +41,16 @@ HashTable.prototype.insert = function(k, v){
 
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
+  // var tupal = [k, v];
   if (this._storage.get(i) === null) {
    return null;
   }
-  return this._storage.get(i)[1];
+  for (var loopIndex = this._storage.get(i).length - 1; loopIndex >= 0; loopIndex--) {
+    if (this._storage.get(i)[loopIndex][0] === k){
+      return this._storage.get(i)[loopIndex][1];
+    }
+  }
+//  return this._storage.get(i)[this._storage.get(i).length -1][1];
 
 };
 
