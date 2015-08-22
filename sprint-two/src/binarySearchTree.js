@@ -20,7 +20,7 @@ var binarySearchTreeMethods = {
         this.left = BinarySearchTree(value);
       }
     } else {
-      this.left.insert(value);
+      this.left.insert(value); //this.insert(value) creates an infinite loop because this.left is never null
     }
 
     if (this.right === null) {
@@ -30,13 +30,40 @@ var binarySearchTreeMethods = {
     } else {
       this.right.insert(value);
     }
-   
-
   },
 
-  contains: function() {},
+  contains: function(value) {
+    if (value === this.value){
+      return true;
+    }
+    else {
+      if(value < this.value){
+        if(this.left !== null){
+          return this.left.contains(value);
+        } else{
+          return false;
+        }
+      }
 
-  depthFirstLog: function() {}
+      if(value > this.value){
+        if(this.right !== null){
+          return this.right.contains(value);
+        } else{
+          return false;
+        }
+      }
+    }
+  },
+
+  depthFirstLog: function(cb) {
+    cb(this.value);
+    if(this.left){
+      this.left.depthFirstLog(cb);
+    }
+    if(this.right){
+      this.right.depthFirstLog(cb);
+    }
+  }
 
 };
 
