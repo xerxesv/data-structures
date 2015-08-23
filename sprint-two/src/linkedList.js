@@ -51,4 +51,8 @@ var Node = function(value){
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  list.removeHead - constant time
+  list.addToTail - constant time
+  list.contains - linear time
+
  */

@@ -39,7 +39,7 @@ Graph.prototype.contains = function(node){
 // ------------------------
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node){
-  var connectingEdges;
+
 
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i].id === node) {
@@ -72,8 +72,11 @@ Graph.prototype.addEdge = function(fromNode, toNode){
 // ------------------------
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode){
-  this.findNode(fromNode).edges.splice(this.findNode(fromNode).edges.indexOf(toNode),1);
-  this.findNode(toNode).edges.splice(this.findNode(toNode).edges.indexOf(fromNode),1);
+  var fromNodeEdges = this.findNode(fromNode).edges;
+  var toNodeEdges = this.findNode(toNode).edges;
+
+  fromNodeEdges.splice(fromNodeEdges.indexOf(toNode),1);
+  toNodeEdges.splice(toNodeEdges.indexOf(fromNode),1);
 };
 
 // ------------------------
@@ -91,15 +94,21 @@ Graph.prototype.findNode = function(node) {
       theNode = this.nodes[i];
     } 
   }
-  if(theNode === undefined){
-    debugger;
-  }
+
   return theNode;
 
 
 };
 /*
  * Complexity: What is the time complexity of the above functions?
+ addNode - constant time
+ contains - linear time
+ removeNode - linear
+ addEdge - linear
+ removeEdge -linear
+ forEachNode - linear
+
+
  */
 
 
